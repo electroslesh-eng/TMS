@@ -1,12 +1,17 @@
-public class Car {
-    String brand;
-    int speed;
-    int price;
+import java.util.Random;
+
+public class Car implements Startable {
+    private String brand;
+    private int speed;
+    private int price;
 
     public Car(String brand, int speed, int price) {
         this.brand = brand;
         this.speed = speed;
         this.price = price;
+    }
+
+    public Car() {
     }
 
     public String getBrand() {
@@ -33,17 +38,20 @@ public class Car {
         this.price = price;
     }
 
-    public static void Start() {
-        System.out.println("");
-    }
 
-    public static void main(String[] args) {
-        final int max = 20;
-        final int rnd = rnd(max);
-        System.out.println("" + rnd);
-    }
-
-    public static int rnd(int max) {
-        return (int) (Math.random() * ++max);
+    @Override
+    public void start() throws Exception {
+        Random random = new Random();
+        int nextInt = random.nextInt(21);
+        if (brand != null || speed != 0 || price != 0) {
+            if (nextInt % 2 != 0) {
+                System.out.println("Машина " + brand + " завелась!");
+            } else {
+                throw new CarIsNotStart("Машина " + brand + " не завелась!");
+            }
+        } else {
+            throw new Exception("данные не корректные brand=" + brand + " " + speed + " " + price);
+//            throw new IllegalArgumentException("данные не корректные");
+        }
     }
 }
